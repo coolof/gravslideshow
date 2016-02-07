@@ -1,4 +1,4 @@
 ---
 title: Gallery name
-img_scale: "blur"
+credit: Global credit
 ---

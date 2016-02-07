@@ -7,7 +7,7 @@
 
       {% set credit = image.meta.credit ? image.media.credit : page.header.credit %}
 
-      <div class="item{% if credit %} width-credit{% endif %}">
+      <div class="item{% if credit %} with-credit{% endif %}">
 
         <div class="img">
           {{ image.fixOrientation.cropResize(1280,1280).html("","","adaptive-background") }}
@@ -19,7 +19,7 @@
           {% endif %}
         </div>
 
-        {% if page.header.img_scale == "retro" %}
+        {% if image.meta.img_scale == "mosaic" or page.header.img_scale == "mosaic" and not image.meta.img_scale == "blur" %}
           <div class="blurred" style="background-image: url({{ image.fixOrientation.cropResize(64, 64).cropZoom(1200, 1200).url() }});"></div>
         {% else %}
           <div class="blurred" style="background-image: url({{ image.fixOrientation.cropResize(64, 64).smooth(10).smooth(10).smooth(10).url() }});"></div>
