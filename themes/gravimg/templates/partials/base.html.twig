@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    {% if header.description %}
+    <meta name="description" content="{{ header.description }}">
+    {% else %}
+    <meta name="description" content="{{ site.description }}">
+    {% endif %}
+    {% if header.robots %}
+    <meta name="robots" content="{{ header.robots }}">
+    {% endif %}
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image" href="{{ page.media.images|first.cropZoom(32,32).url }}">
+
+    <title>{% if header.title %}{{ header.title }} - {{ page.header.subtitle }} | {% endif %}{{ site.title }}</title>
+
+    {# Add css #}
+    {% block stylesheets %}
+      {% do assets.add('theme://css/styles.css',101) %}
+    {% endblock %}
+    {{ assets.css() }}
+
+    {# Add js #}
+    {% block javascripts %}
+      {% do assets.add('https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') %}
+      {% do assets.add('https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.0/jquery.flexslider.js') %}
+      {% do assets.add('theme://js/jquery.adaptive-backgrounds.js') %}
+      {% do assets.add('theme://js/tinycolor-min.js') %}
+      {% do assets.add('theme://js/scripts.js') %}
+
+      {% if browser.getBrowser == 'msie' and browser.getVersion >= 8 and browser.getVersion <= 9 %}
+        {% do assets.add('https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js') %}
+      {% endif %}
+    {% endblock %}
+    {{ assets.js() }}
+
+    {% endblock head %}
+  </head>
+
+  {% set body_class = page.header.body_class %}
+
+  <body {% if page.header.body_class %}class="{{ body_class }}"{% endif%}>
+    <section class="gallery">
+      {% block content %}{% endblock %}
+    </section>
+  </body>
+
+  {% block bottom %}{% endblock %}
+</html>
